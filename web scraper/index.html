@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Scraping Tool</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+h1, h2 {
+  color: black;
+  text-align: center;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: black;
+  font-weight: bold;
+  text-align: left;
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#result {
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-container">
+    <h1>WEB SCRAPING TOOL</h1>
+
+    <form id="scrapingForm">
+      <label for="url">Enter URL:</label>
+      <input type="text" id="url" name="url" placeholder="https://books.toscrape.com">
+      <button type="button" onclick="startScraping()">Start Scraping</button>
+    </form>
+  </div>
+  <div id="result">
+    <h2>Scraped Data</h2>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Link</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function startScraping() {
+    const urlInput = document.getElementById('url');
+    const url = urlInput.value.trim();
+
+    // Check if the entered URL matches the allowed URL
+    if (url !== 'https://books.toscrape.com/') {
+        alert('Please enter the correct URL (https://books.toscrape.com/).');
+        return;
+    }
+
+    fetch('http://127.0.0.1:5000/scrape?url=' + encodeURIComponent(url), {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        const tableBody = document.getElementById('dataTable').querySelector('tbody');
+        tableBody.innerHTML = '';
+
+        data.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.Title}</td>
+                <td>${item.Price}</td>
+                <td><a href="${item.Link}" target="_blank">Link</a></td>
+                <td>${item.Stock}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        resultDiv.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+
+</body>
+</html>

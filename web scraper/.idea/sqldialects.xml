@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/78f18cd2-bcae-4a0e-9459-8fca96a2ce7f/console.sql" dialect="SQLite" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d94ba2b9-8715-4d25-bb3d-6eed0cfb945b/console.sql" dialect="SQLite" />
+    <file url="file://$PROJECT_DIR$/app.py" dialect="SQLite" />
+    <file url="file://$PROJECT_DIR$/web scrapping.py" dialect="SQLite" />
+  </component>
+</project>
