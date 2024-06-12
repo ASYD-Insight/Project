@@ -1,4 +1,3 @@
-# Project
+# IPL SCORE PEDICTOR
 Our project works are posted here.
-## My mass project
-**Yuvarajan veriii**
+
